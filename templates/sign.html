@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="height: 300px;width:250px;padding:25px;background-color:rgb(212, 228, 107);margin:100px;margin-left:500px"> 
+        <form action="{% url "signin" %}" method="POST" >
+            {% csrf_token %} 
+            <h1>SignUp</h1>
+            
+            <label>Username</label><br>
+            <input type="text" placeholder="Username" name="username" ><br>
+            
+            <label>Email</label><br>
+            <input type="email" placeholder="Email" name="email"><br>
+            
+            <label>Password</label><br>
+            <input type="password" placeholder="Password" name="password"><br>
+
+            <label>Confirm Password</label><br>
+            <input type="password" placeholder="Confirm Password" name="cpassword" required><br>
+            <button type="submit"  >Signup</button><br>
+            <br>
+            {% comment %} <a href="" >i have already account</a> {% endcomment %}
+        </form>
+    </div>
+</body>
+</html>
