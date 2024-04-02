@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 import re
-from django.views.decorators.cache import never_cache
-
 
 # Create your views here.
 
@@ -16,7 +14,7 @@ def sign(request):
         c_password = request.POST.get("cpassword")
         
         print(user_name,password)
-        if re.match(r'[0-9]',user_name):
+        if re.match(r'^\d',user_name):
             return HttpResponse("user name should start with Alphabets")
         
         if len(user_name)<4:
