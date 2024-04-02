@@ -14,7 +14,7 @@ def sign(request):
         c_password = request.POST.get("cpassword")
         
         print(user_name,password)
-        if re.match(r'^\d',user_name):
+        if  not user_name.isalpha():
             return HttpResponse("user name should start with Alphabets")
         
         if len(user_name)<4:
