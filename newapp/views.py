@@ -1,6 +1,11 @@
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth.decorators import login_required
+import re
+from django.views.decorators.cache import never_cache
+
+
 # Create your views here.
 
 def sign(request):
@@ -9,18 +14,33 @@ def sign(request):
         email = request.POST.get("email")
         password = request.POST.get("password")
         c_password = request.POST.get("cpassword")
+        
+        print(user_name,password)
+        if re.match(r'[0-9]',user_name):
+            return HttpResponse("user name should start with Alphabets")
+        
+        if len(user_name)<4:
+            return HttpResponse("user name should have atleat 4 letters")
+        
+        if len(password)<2:
+            return HttpResponse("pass should have atleast 4 characters")
+        
         if password != c_password:
             return HttpResponse("confirm password does not match the password")
         else:
             valid_user = User.objects.create_user(user_name,email,password)
             valid_user.save()
             return redirect("login")
-    print('llk')
     return render(request,"sign.html")
 
+@login_required(login_url='login')
+def home(request):
+    if request.user.is_authenticated:
+        return render(request, "home.html")
+    else:
+        return HttpResponse("You are not logged in.")
 
 def login_user(request):
-    
     if request.method == "POST":
         u_name = request.POST.get("username")
         password = request.POST.get("password")
@@ -35,5 +55,7 @@ def login_user(request):
   
     return render(request,"login.html")
 
-def home(request):
-    return render(request,"home.html")
+
+def logout_user(request):
+    logout(request)
+    return redirect("login")
