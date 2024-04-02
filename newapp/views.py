@@ -31,11 +31,6 @@ def sign(request):
             return redirect("login")
     return render(request,"sign.html")
 
-@login_required(login_url='login')
-def home(request):
-    if request.User.is_authenticated:
-        return render(request, "home.html")
-
 def login_user(request):
     if request.method == "POST":
         u_name = request.POST.get("username")
@@ -51,6 +46,10 @@ def login_user(request):
   
     return render(request,"login.html")
 
+@login_required(login_url='login')
+def home(request):
+    if request.User.is_authenticated:
+        return render(request, "home.html")
 
 def logout_user(request):
     logout(request)
