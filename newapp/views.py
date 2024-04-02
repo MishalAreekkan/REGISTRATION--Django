@@ -33,10 +33,8 @@ def sign(request):
 
 @login_required(login_url='login')
 def home(request):
-    if request.user.is_authenticated:
+    if request.User.is_authenticated:
         return render(request, "home.html")
-    else:
-        return HttpResponse("You are not logged in.")
 
 def login_user(request):
     if request.method == "POST":
